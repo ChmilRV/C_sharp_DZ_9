@@ -32,7 +32,8 @@ namespace C_sharp_DZ_9_1
         {
             Title = "Тамагочи";
             Timer timer1 = new Timer();
-            timer1.Interval(2000);
+            timer1.Interval = 2000;
+            timer1.Start();
             MessageBox.Show("Тестовое сообщение", "Шапка окна", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 
