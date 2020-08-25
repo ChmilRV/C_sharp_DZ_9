@@ -1,4 +1,8 @@
 ﻿using System;
+using static System.Console;
+using System.Management;
+using System.Windows.Forms;
+//using System.Timers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,9 +30,16 @@ namespace C_sharp_DZ_9_1
     {
         static void Main(string[] args)
         {
+            Title = "Тамагочи";
+            Timer timer1 = new Timer();
+            timer1.Interval(2000);
+            MessageBox.Show("Тестовое сообщение", "Шапка окна", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 
+            
+            
 
+            ReadKey();
         }
     }
 }
