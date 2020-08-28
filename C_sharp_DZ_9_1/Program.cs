@@ -34,18 +34,13 @@ namespace C_sharp_DZ_9_1
 
 
         }
-        public string FeedMe()
-        {
-            string feedMe = "Покорми меня!";
-            WriteLine(feedMe);
-            return feedMe;
-        }
-        public void WalkWithMe() { WriteLine("Погуляй со мной!"); }
-        public void PutMeToBad() { WriteLine("Положи спать!"); }
-        public void HealMe() { WriteLine("Полечи меня!"); }
-        public void PlayWithMe() { WriteLine("Поиграй со мной!"); }
-        delegate void Request(string request);
-        event Request Notify;
+        public void FeedMe() => MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); 
+        public void WalkWithMe() => MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        public void PutMeToBad() => MessageBox.Show("Положи спать!", Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        public void HealMe() => MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        public void PlayWithMe() => MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.OK, MessageBoxIcon.Question);
+        
+
 
 
     }
@@ -68,18 +63,14 @@ namespace C_sharp_DZ_9_1
             chudik.PutMeToBad();
             chudik.HealMe();
             chudik.PlayWithMe();
-            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            
             do
             {
 
 
 
 
-            } while (!dead);
+            } while (dead);
             
             
 
