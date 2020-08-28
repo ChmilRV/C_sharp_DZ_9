@@ -24,6 +24,31 @@ using System.Threading.Tasks;
 передав в него необходимое количество миллисекунд.*/
 namespace C_sharp_DZ_9_1
 {
+    public class Tamagochi
+    {
+        public string Name { get; set; } = "Чудик";
+        public void ShowChudik()
+        {
+            WriteLine();
+
+
+
+        }
+        public string FeedMe()
+        {
+            string feedMe = "Покорми меня!";
+            WriteLine(feedMe);
+            return feedMe;
+        }
+        public void WalkWithMe() { WriteLine("Погуляй со мной!"); }
+        public void PutMeToBad() { WriteLine("Положи спать!"); }
+        public void HealMe() { WriteLine("Полечи меня!"); }
+        public void PlayWithMe() { WriteLine("Поиграй со мной!"); }
+        delegate void Request(string request);
+        event Request Notify;
+
+
+    }
 
 
     class Program
@@ -31,12 +56,30 @@ namespace C_sharp_DZ_9_1
         static void Main(string[] args)
         {
             Title = "Тамагочи";
-            Timer timer1 = new Timer();
-            timer1.Interval = 2000;
-            timer1.Start();
-            MessageBox.Show("Тестовое сообщение", "Шапка окна", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            bool dead = false;
+            //Timer timer1 = new Timer();
+            //timer1.Interval = 2000;
+            //timer1.Start();
+            //MessageBox.Show("Тестовое сообщение", "Шапка окна", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            Tamagochi chudik = new Tamagochi();
+            WriteLine(chudik.Name);
+            chudik.FeedMe();
+            chudik.WalkWithMe();
+            chudik.PutMeToBad();
+            chudik.HealMe();
+            chudik.PlayWithMe();
+            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(chudik.FeedMe(), chudik.Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            do
+            {
 
 
+
+
+            } while (!dead);
             
             
 
