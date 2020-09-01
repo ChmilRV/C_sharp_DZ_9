@@ -2,7 +2,6 @@
 using static System.Console;
 using System.Management;
 using System.Windows.Forms;
-//using System.Timers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,20 +25,23 @@ namespace C_sharp_DZ_9_1
 {
     public class Tamagochi
     {
+
+   
         public string Name { get; set; } = "Чудик";
         public void ShowChudik()
         {
             WriteLine();
-
-
-
         }
-        public void FeedMe() => MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); 
-        public void WalkWithMe() => MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        public void PutMeToBad() => MessageBox.Show("Положи спать!", Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        public void HealMe() => MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        public void PlayWithMe() => MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.OK, MessageBoxIcon.Question);
-        
+
+        public void FeedMe() => MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation); 
+        public void WalkWithMe() => MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+        public void PutMeToBad() => MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        public void PlayWithMe() => MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        public void HealMe() => MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        public void DeadTama()
+        {
+            MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
 
 
@@ -48,33 +50,37 @@ namespace C_sharp_DZ_9_1
 
     class Program
     {
+        delegate void TamaDelegate();
+        event TamaDelegate TamaEvent;
+                
         static void Main(string[] args)
         {
             Title = "Тамагочи";
-            bool dead = false;
-            //Timer timer1 = new Timer();
-            //timer1.Interval = 2000;
-            //timer1.Start();
-            //MessageBox.Show("Тестовое сообщение", "Шапка окна", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            //bool dead = false;
             Tamagochi chudik = new Tamagochi();
-            WriteLine(chudik.Name);
-            chudik.FeedMe();
-            chudik.WalkWithMe();
-            chudik.PutMeToBad();
-            chudik.HealMe();
-            chudik.PlayWithMe();
+            TamaDelegate Feed = new TamaDelegate(chudik.FeedMe);
+            TamaDelegate Walk = new TamaDelegate(chudik.WalkWithMe);
+            TamaDelegate Bad = new TamaDelegate(chudik.PutMeToBad);
+            TamaDelegate Play = new TamaDelegate(chudik.PlayWithMe);
+
+            TamaEvent += Feed; ;
+
+            //Feed();
+
             
-            do
-            {
+            //do
+            //{
 
-
-
-
-            } while (dead);
+            //} while (dead);
             
             
 
             ReadKey();
+        }
+
+        private static void Program_TamaEvent()
+        {
+            throw new NotImplementedException();
         }
     }
 }
