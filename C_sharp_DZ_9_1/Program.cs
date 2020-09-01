@@ -23,17 +23,17 @@ using System.Threading.Tasks;
 передав в него необходимое количество миллисекунд.*/
 namespace C_sharp_DZ_9_1
 {
+    public delegate void TamaDelegate();
     public class Tamagochi
     {
-
-   
+        public event TamaDelegate TamaNotify;
         public string Name { get; set; } = "Чудик";
         public void ShowChudik()
         {
             WriteLine();
         }
 
-        public void FeedMe() => MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation); 
+        public void FeedMe() => MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
         public void WalkWithMe() => MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
         public void PutMeToBad() => MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         public void PlayWithMe() => MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -43,44 +43,50 @@ namespace C_sharp_DZ_9_1
             MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-
-
-    }
-
-
-    class Program
-    {
-        delegate void TamaDelegate();
-        event TamaDelegate TamaEvent;
-                
-        static void Main(string[] args)
+        public void TamaEventDo()
         {
-            Title = "Тамагочи";
-            //bool dead = false;
-            Tamagochi chudik = new Tamagochi();
-            TamaDelegate Feed = new TamaDelegate(chudik.FeedMe);
-            TamaDelegate Walk = new TamaDelegate(chudik.WalkWithMe);
-            TamaDelegate Bad = new TamaDelegate(chudik.PutMeToBad);
-            TamaDelegate Play = new TamaDelegate(chudik.PlayWithMe);
-
-            TamaEvent += Feed; ;
-
-            //Feed();
-
-            
-            //do
-            //{
-
-            //} while (dead);
-            
-            
-
-            ReadKey();
+            TamaNotify?.Invoke();
         }
 
-        private static void Program_TamaEvent()
+
+        class Program
         {
-            throw new NotImplementedException();
+
+
+
+            static void Main(string[] args)
+            {
+                Title = "Тамагочи";
+                //bool dead = false;
+                Tamagochi pers1 = new Tamagochi();
+
+                //TamaDelegate Feed = new TamaDelegate(pers1.FeedMe);
+                //TamaDelegate Walk = new TamaDelegate(pers1.WalkWithMe);
+                //TamaDelegate Bad = new TamaDelegate(pers1.PutMeToBad);
+                //TamaDelegate Play = new TamaDelegate(pers1.PlayWithMe);
+
+
+                pers1.TamaNotify += pers1.FeedMe;
+                pers1.TamaNotify += pers1.WalkWithMe;
+                pers1.TamaEventDo();
+
+                //Feed();
+
+
+                //do
+                //{
+
+                //} while (dead);
+
+
+
+                ReadKey();
+            }
+
+            private static void Program_TamaEvent()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
