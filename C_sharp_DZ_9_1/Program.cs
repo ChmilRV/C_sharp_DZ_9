@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 В случае отказа — «умирает». Персонаж отображается в консольном окне при помощи псевдографики.
 Диалог с персонажем осуществляется посредством вызова метода Show() класса MessageBox
 из пространства имен System.Windows.Forms.
-За получением подробной информации по работе с этим методом обратитесь к Вашему преподавателю или в MSDN.
 Для решения этой задачи Вам понадобится класс Timer из пространства имен System.Timers,
 событие которого Elapsed, типа делегата ElapsedEventHandler,
 происходит через определенный интервал времени, который задан в свойстве Interval.
@@ -28,12 +27,20 @@ namespace C_sharp_DZ_9_1
     {
         public event TamaDelegate TamaNotify;
         public string Name { get; set; } = "Чудик";
+        public int LifeCount { get; set; } = 3;
         public void ShowChudik()
         {
             WriteLine();
         }
 
-        public void FeedMe() => MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+        public void FeedMe()
+        {
+
+            MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+
+        }
+
         public void WalkWithMe() => MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
         public void PutMeToBad() => MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         public void PlayWithMe() => MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
