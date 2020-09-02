@@ -25,27 +25,27 @@ namespace C_sharp_DZ_9_1
     public delegate int TamaDelegate();
     public class Tamagochi
     {
-        SortedList<int, TamaDelegate> _sortedEvents = new SortedList<int, TamaDelegate>();
-        Random _rand = new Random();
-        public event TamaDelegate TamaNotify
-        {
-            add
-            {
-                for (int key; ;)
-                {
-                    key = _rand.Next();
-                    if (!_sortedEvents.ContainsKey(key))
-                    {
-                        _sortedEvents.Add(key, value);
-                        break;
-                    }
-                }
-            }
-            remove
-            {
-                _sortedEvents.RemoveAt(_sortedEvents.IndexOfValue(value));
-            }
-        }
+        //SortedList<int, TamaDelegate> _sortedEvents = new SortedList<int, TamaDelegate>();
+        //Random _rand = new Random();
+        public static event TamaDelegate TamaNotify;
+        //{
+        //    add
+        //    {
+        //        for (int key; ;)
+        //        {
+        //            key = _rand.Next();
+        //            if (!_sortedEvents.ContainsKey(key))
+        //            {
+        //                _sortedEvents.Add(key, value);
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    remove
+        //    {
+        //        _sortedEvents.RemoveAt(_sortedEvents.IndexOfValue(value));
+        //    }
+        //}
         public static string Name { get; set; } = "Персонаж";
         public static int LifeCount { get; set; }
         public static void ShowChudik()
@@ -101,17 +101,27 @@ namespace C_sharp_DZ_9_1
 
         public static int TamaEventDo()
         {
+            TamaNotify += FeedMe;
+            TamaNotify += WalkWithMe;
+
             return (int)TamaNotify?.Invoke();
 
         }
 
+      
 
         class Program
         {
+            private static System.Timers.Timer aTimer;
+
             static void Main(string[] args)
             {
                 Title = "Тамагочи";
                 LifeCount = 5;
+                aTimer = new System.Timers.Timer();
+                aTimer.Interval = 5000;
+                aTimer.Elapsed += FeedMe;
+
                 do
                 {
                     WriteLine($"Жизней до: {LifeCount}.");
