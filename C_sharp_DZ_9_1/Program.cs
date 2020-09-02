@@ -22,79 +22,77 @@ using System.Threading.Tasks;
 передав в него необходимое количество миллисекунд.*/
 namespace C_sharp_DZ_9_1
 {
-    public delegate void TamaDelegate();
+    public delegate int TamaDelegate();
     public class Tamagochi
     {
-        public event TamaDelegate TamaNotify;
-        public string Name { get; set; } = "Чудик";
-        public int LifeCount { get; set; } = 3;
-        public void ShowChudik()
+        public static event TamaDelegate TamaNotify;
+        public static string Name { get; set; } = "Чудик";
+        public static int LifeCount { get; set; } = 3;
+        public static void ShowChudik()
         {
             WriteLine();
         }
 
-        public void FeedMe()
+        public static int FeedMe()
         {
-
-            MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-
-
+            DialogResult result = MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Yes) return 1;
+            else return -1;
         }
-
-        public void WalkWithMe() => MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-        public void PutMeToBad() => MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        public void PlayWithMe() => MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-        public void HealMe() => MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        public static int WalkWithMe()
+        {
+            DialogResult result = MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            if (result == DialogResult.Yes) return 1;
+            else return -1;
+        }
+        public static int PutMeToBad() 
+        {
+            DialogResult result = MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (result == DialogResult.Yes) return 1;
+            else return -1;
+        }
+        public static int PlayWithMe() 
+        {
+            DialogResult result = MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes) return 1;
+            else return -1;
+        }
+        public static int HealMe()
+        {
+            DialogResult result = MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes) return 1;
+            else return -1;
+        }
         public void DeadTama()
         {
             MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        public void TamaEventDo()
+        public static int TamaEventDo()
         {
             TamaNotify += FeedMe;
-            TamaNotify += WalkWithMe;
-            TamaNotify?.Invoke();
+            //TamaNotify += WalkWithMe;
+            //TamaNotify?.Invoke();
+            return (int)TamaNotify?.Invoke();
+
         }
 
 
         class Program
         {
-
-
-
             static void Main(string[] args)
             {
                 Title = "Тамагочи";
-                //bool dead = false;
-                Tamagochi pers1 = new Tamagochi();
-
-                //TamaDelegate Feed = new TamaDelegate(pers1.FeedMe);
-                //TamaDelegate Walk = new TamaDelegate(pers1.WalkWithMe);
-                //TamaDelegate Bad = new TamaDelegate(pers1.PutMeToBad);
-                //TamaDelegate Play = new TamaDelegate(pers1.PlayWithMe);
+                do
+                {
 
 
-                //pers1.TamaNotify += pers1.FeedMe;
-                //pers1.TamaNotify += pers1.WalkWithMe;
-                pers1.TamaEventDo();
-
-                //Feed();
+                    LifeCount =+ TamaEventDo();
 
 
-                //do
-                //{
-
-                //} while (dead);
-
-
+                } while (LifeCount > 0);
 
                 ReadKey();
-            }
-
-            private static void Program_TamaEvent()
-            {
-                throw new NotImplementedException();
             }
         }
     }
