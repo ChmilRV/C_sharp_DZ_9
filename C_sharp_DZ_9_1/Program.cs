@@ -35,9 +35,19 @@ namespace C_sharp_DZ_9_1
 
         public static int FeedMe()
         {
+            WriteLine($"{Name} хочет есть. Жизней {LifeCount}.");
             DialogResult result = MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-            if (result == DialogResult.Yes) return 1;
-            else return -1;
+            if (result == DialogResult.Yes)
+            {
+                WriteLine($"{Name} покормлен. Жизней {LifeCount}.");
+                return 1;
+            }
+            else
+            {
+                WriteLine($"{Name} непокормлен. Жизней {LifeCount}.");
+                return -1;
+            }
+            
         }
         public static int WalkWithMe()
         {
@@ -83,15 +93,15 @@ namespace C_sharp_DZ_9_1
             static void Main(string[] args)
             {
                 Title = "Тамагочи";
+
                 do
                 {
-
 
                     LifeCount =+ TamaEventDo();
 
 
-                } while (LifeCount > 0);
-
+                } while (LifeCount >= 0);
+                WriteLine("Anykey.");
                 ReadKey();
             }
         }
