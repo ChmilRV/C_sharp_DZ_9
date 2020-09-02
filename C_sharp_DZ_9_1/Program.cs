@@ -52,6 +52,8 @@ namespace C_sharp_DZ_9_1
 
         public void TamaEventDo()
         {
+            TamaNotify += FeedMe;
+            TamaNotify += WalkWithMe;
             TamaNotify?.Invoke();
         }
 
@@ -73,8 +75,8 @@ namespace C_sharp_DZ_9_1
                 //TamaDelegate Play = new TamaDelegate(pers1.PlayWithMe);
 
 
-                pers1.TamaNotify += pers1.FeedMe;
-                pers1.TamaNotify += pers1.WalkWithMe;
+                //pers1.TamaNotify += pers1.FeedMe;
+                //pers1.TamaNotify += pers1.WalkWithMe;
                 pers1.TamaEventDo();
 
                 //Feed();
