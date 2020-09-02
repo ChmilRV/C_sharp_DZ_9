@@ -22,115 +22,104 @@ using System.Threading.Tasks;
 передав в него необходимое количество миллисекунд.*/
 namespace C_sharp_DZ_9_1
 {
-    public delegate int TamaDelegate();
-    public class Tamagochi
+    public class Tama
     {
-        //SortedList<int, TamaDelegate> _sortedEvents = new SortedList<int, TamaDelegate>();
-        //Random _rand = new Random();
-        public static event TamaDelegate TamaNotify;
-        //{
-        //    add
-        //    {
-        //        for (int key; ;)
-        //        {
-        //            key = _rand.Next();
-        //            if (!_sortedEvents.ContainsKey(key))
-        //            {
-        //                _sortedEvents.Add(key, value);
-        //                break;
-        //            }
-        //        }
-        //    }
-        //    remove
-        //    {
-        //        _sortedEvents.RemoveAt(_sortedEvents.IndexOfValue(value));
-        //    }
-        //}
-        public static string Name { get; set; } = "Персонаж";
-        public static int LifeCount { get; set; }
-        public static void ShowChudik()
+        public string Name { get; set; } = "Персонаж";
+        public int LifeCount { get; set; }
+        Tama(string name, int lifeCount)
         {
-            WriteLine();
+            Name = name;
+            LifeCount = lifeCount;
         }
-        public static int FeedMe()
+        public void ShowTama()
         {
+            WriteLine("(.^.)()()()()()()...");
+        }
+        private void Life(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            ShowTama();
             WriteLine($"{Name} хочет есть. Жизней {LifeCount}.");
+            Random _rand = new Random();
             DialogResult result = MessageBox.Show("Покорми мня!!!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result == DialogResult.Yes)
             {
                 WriteLine($"{Name} покормлен. Жизней {LifeCount}.");
-                return 1;
+                
             }
             else
             {
                 WriteLine($"{Name} непокормлен. Жизней {LifeCount}.");
-                return -1;
+                
             }
             
         }
-        public static int WalkWithMe()
-        {
-            DialogResult result = MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (result == DialogResult.Yes) return 1;
-            else return -1;
-        }
-        public static int PutMeToBad() 
-        {
-            DialogResult result = MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (result == DialogResult.Yes) return 1;
-            else return -1;
-        }
-        public static int PlayWithMe() 
-        {
-            DialogResult result = MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes) return 1;
-            else return -1;
-        }
-        public static int HealMe()
-        {
-            DialogResult result = MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes) return 1;
-            else return -1;
-        }
-        public void DeadTama()
+        //public static int WalkWithMe()
+        //{
+        //    DialogResult result = MessageBox.Show("Погуляй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+        //    if (result == DialogResult.Yes) return 1;
+        //    else return -1;
+        //}
+        //public static int PutMeToBad() 
+        //{
+        //    DialogResult result = MessageBox.Show("Положи спать!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        //    if (result == DialogResult.Yes) return 1;
+        //    else return -1;
+        //}
+        //public static int PlayWithMe() 
+        //{
+        //    DialogResult result = MessageBox.Show("Поиграй со мной!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //    if (result == DialogResult.Yes) return 1;
+        //    else return -1;
+        //}
+        //public static int HealMe()
+        //{
+        //    DialogResult result = MessageBox.Show("Полечи меня!", Name, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        //    if (result == DialogResult.Yes) return 1;
+        //    else return -1;
+        //}
+        public void Kill(Object source, System.Timers.ElapsedEventArgs e)
         {
             MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            
         }
 
-
-
-        public static int TamaEventDo()
-        {
-            TamaNotify += FeedMe;
-            TamaNotify += WalkWithMe;
-
-            return (int)TamaNotify?.Invoke();
-
-        }
-
-      
-
-        class Program
+    class Program
         {
             private static System.Timers.Timer aTimer;
+            private static void SetTimer(Tama pers)
+            {
+                aTimer = new System.Timers.Timer(2000);
+                aTimer.Elapsed += pers.Life;
+                aTimer.AutoReset = true;
+                aTimer.Enabled = true;
+                
+            }
+            private static System.Timers.Timer killTimer;
+            private static void SetKillTimer(Tama pers)
+            {
+                killTimer = new System.Timers.Timer(15000);
+                killTimer.Elapsed += pers.Kill;
+                killTimer.AutoReset = false;
+                killTimer.Enabled = true;
+                
+            }
+
 
             static void Main(string[] args)
             {
                 Title = "Тамагочи";
-                LifeCount = 5;
-                aTimer = new System.Timers.Timer();
-                aTimer.Interval = 5000;
-                aTimer.Elapsed += FeedMe;
+                Tama pers = new Tama("Igor", 3);
+                SetTimer(pers);
+                SetKillTimer(pers);
 
-                do
-                {
-                    WriteLine($"Жизней до: {LifeCount}.");
+                //do
+                //{
+                //    WriteLine($"Жизней до: {LifeCount}.");
+                //    LifeCount =+ TamaEventDo();
+                //    WriteLine($"Жизней после: {LifeCount}.");
+                //} while (LifeCount >= 0);
 
-                    LifeCount =+ TamaEventDo();
-                    WriteLine($"Жизней после: {LifeCount}.");
-
-                } while (LifeCount >= 0);
-                WriteLine("Anykey.");
                 ReadKey();
             }
         }
