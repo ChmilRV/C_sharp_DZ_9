@@ -25,9 +25,33 @@ namespace C_sharp_DZ_9_1
     public delegate int TamaDelegate();
     public class Tamagochi
     {
-        public static event TamaDelegate TamaNotify;
-        public static string Name { get; set; } = "Чудик";
-        public static int LifeCount { get; set; } = 3;
+        SortedList<int, TamaDelegate> _sortedEvents = new SortedList<int, TamaDelegate>();
+        Random _rand = new Random();
+        public static event TamaDelegate TamaNotify
+        {
+            add
+            {
+                for (int key; ;)
+                {
+                    key = _rand.Next();
+                    if (!_sortedEvents.ContainsKey(key))
+                    {
+                        _sortedEvents.Add(key, value);
+                        break;
+                    }
+                }
+            }
+            remove
+            {
+                _sortedEvents.RemoveAt(_sortedEvents.IndexOfValue(value));
+            }
+        }
+
+
+
+
+        public static string Name { get; set; } = "Персонаж";
+        public static int LifeCount { get; set; }
         public static void ShowChudik()
         {
             WriteLine();
@@ -78,11 +102,14 @@ namespace C_sharp_DZ_9_1
             MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+
+
         public static int TamaEventDo()
         {
-            TamaNotify += FeedMe;
-            //TamaNotify += WalkWithMe;
-            //TamaNotify?.Invoke();
+            
+
+
+
             return (int)TamaNotify?.Invoke();
 
         }
@@ -93,12 +120,13 @@ namespace C_sharp_DZ_9_1
             static void Main(string[] args)
             {
                 Title = "Тамагочи";
-
+                LifeCount = 5;
                 do
                 {
+                    WriteLine($"Жизней до: {LifeCount}.");
 
-                    LifeCount =+ TamaEventDo();
-
+                    LifeCount = LifeCount + TamaEventDo();
+                    WriteLine($"Жизней после: {LifeCount}.");
 
                 } while (LifeCount >= 0);
                 WriteLine("Anykey.");
