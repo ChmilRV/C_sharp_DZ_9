@@ -27,7 +27,7 @@ namespace C_sharp_DZ_9_1
     {
         SortedList<int, TamaDelegate> _sortedEvents = new SortedList<int, TamaDelegate>();
         Random _rand = new Random();
-        public static event TamaDelegate TamaNotify
+        public event TamaDelegate TamaNotify
         {
             add
             {
@@ -46,17 +46,12 @@ namespace C_sharp_DZ_9_1
                 _sortedEvents.RemoveAt(_sortedEvents.IndexOfValue(value));
             }
         }
-
-
-
-
         public static string Name { get; set; } = "Персонаж";
         public static int LifeCount { get; set; }
         public static void ShowChudik()
         {
             WriteLine();
         }
-
         public static int FeedMe()
         {
             WriteLine($"{Name} хочет есть. Жизней {LifeCount}.");
@@ -106,10 +101,6 @@ namespace C_sharp_DZ_9_1
 
         public static int TamaEventDo()
         {
-            
-
-
-
             return (int)TamaNotify?.Invoke();
 
         }
@@ -125,7 +116,7 @@ namespace C_sharp_DZ_9_1
                 {
                     WriteLine($"Жизней до: {LifeCount}.");
 
-                    LifeCount = LifeCount + TamaEventDo();
+                    LifeCount =+ TamaEventDo();
                     WriteLine($"Жизней после: {LifeCount}.");
 
                 } while (LifeCount >= 0);
