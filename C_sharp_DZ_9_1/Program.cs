@@ -25,7 +25,7 @@ namespace C_sharp_DZ_9_1
 {
     public class Tama
     {
-        public string Name { get; set; } = "Персонаж";
+        public string Name { get; set; }
         public int LifeCount { get; set; }
         
         public Tama(string name, int lifeCount)
@@ -37,7 +37,7 @@ namespace C_sharp_DZ_9_1
         {
             WriteLine("(.^.)()()()()()()...");
         }
-        public static int Life()
+        public int Life()
         {
             string[] requestArray = { "Покорми", "Погуляй", "Положи спать", "Поиграй", "Полечи" };
             Random _rand = new Random();
@@ -46,15 +46,11 @@ namespace C_sharp_DZ_9_1
             if (result == DialogResult.Yes) return 1;
             else return -1;
         }
-
         public void Kill(Object source, System.Timers.ElapsedEventArgs e)
         {
             MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-
         }
-
-        public static void LifeEvent(Object source, System.Timers.ElapsedEventArgs e)
+        public void LifeEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             ShowTama();
             Life();
@@ -69,8 +65,8 @@ namespace C_sharp_DZ_9_1
         {
                 Title = "Тамагочи";
                 Tama pers = new Tama("Igor", 3);
-                aTimer = new System.Timers.Timer(2000);
-                aTimer.Elapsed += LifeEvent;
+                aTimer = new System.Timers.Timer(5000);
+                aTimer.Elapsed += pers.LifeEvent;
                 aTimer.AutoReset = true;
                 aTimer.Enabled = true;
                 
