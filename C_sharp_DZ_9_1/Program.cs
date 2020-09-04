@@ -65,7 +65,7 @@ namespace C_sharp_DZ_9_1
         {
                 Title = "Тамагочи";
                 Tama pers = new Tama("Igor", 3);
-                aTimer = new System.Timers.Timer(5000);
+                aTimer = new System.Timers.Timer(2000);
                 aTimer.Elapsed += pers.LifeEvent;
                 aTimer.AutoReset = true;
                 aTimer.Enabled = true;
