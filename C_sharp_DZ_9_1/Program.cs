@@ -1,7 +1,6 @@
 ﻿using System;
 using static System.Console;
 using System.Windows.Forms;
-
 /*Разработать приложение «Тамагочи». Жизненный цикл персонажа — 1-2 минуты.
 Персонаж случайным образом выдаёт просьбы (но подряд одна и та же просьба не выдаётся).
 Просьбы могут быть следующие: Покормить, Погулять, Уложить спать, Полечить, Поиграть.
@@ -31,10 +30,6 @@ namespace C_sharp_DZ_9_1
         {
             WriteLine("(.^.)()()()()()()...");
         }
-        public void Kill(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            MessageBox.Show("Конец!", Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
         public void LifeEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             ShowTama();
@@ -46,29 +41,35 @@ namespace C_sharp_DZ_9_1
         static void Main(string[] args)
         {
             Title = "Тамагочи";
-            Tama pers = new Tama("Igor");
-            aTimer = new System.Timers.Timer(2000);
-            string[] requestArray = { "Покорми", "Погуляй", "Положи спать", "Поиграй", "Полечи" };
+            Tama pers = new Tama("Игорь");
+            aTimer = new System.Timers.Timer(3000);
+            string[] requestArray = { "Покорми меня!", "Погуляй со мной!", "Положи меня спать!", "Поиграй со мной!", "Полечи меня!" };
             Random _rand = new Random();
             aTimer.Elapsed += pers.LifeEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
             do
             {
+                aTimer.Start();
                 string request = requestArray[_rand.Next(0, 5)];
                 DialogResult result = MessageBox.Show(request, pers.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
+                    WriteLine($"Просьба: \"{request}\" выполнена.");
                     if (Tama.LifeCount < 3) Tama.LifeCount += 1;
                     else Tama.LifeCount = 3;
                 }
-                else Tama.LifeCount -= 1;
+                else
+                {
+                    WriteLine($"Просьба: \"{request}\" не выполнена.");
+                    Tama.LifeCount -= 1;
+                }
                 WriteLine($"Осталоси жизней: {Tama.LifeCount}");
-                aTimer.AutoReset = true;
-                aTimer.Enabled = true;
+                System.Threading.Thread.Sleep(3000);
             } while (Tama.LifeCount > 0);
             aTimer.Stop();
             WriteLine("Конец игры.\nPress any key...");
             ReadKey();
         }
-        
     }
 }
