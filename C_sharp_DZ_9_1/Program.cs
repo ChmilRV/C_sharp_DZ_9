@@ -1,12 +1,7 @@
 ﻿using System;
 using static System.Console;
-using System.Management;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Remoting.Lifetime;
+
 /*Разработать приложение «Тамагочи». Жизненный цикл персонажа — 1-2 минуты.
 Персонаж случайным образом выдаёт просьбы (но подряд одна и та же просьба не выдаётся).
 Просьбы могут быть следующие: Покормить, Погулять, Уложить спать, Полечить, Поиграть.
@@ -26,25 +21,15 @@ namespace C_sharp_DZ_9_1
     public class Tama
     {
         public string Name { get; set; }
-        public int LifeCount { get; set; }
+        public  static int LifeCount { get; set; } = 3;
         
-        public Tama(string name, int lifeCount)
+        public Tama(string name)
         {
             Name = name;
-            LifeCount = lifeCount;
         }
         public static void ShowTama()
         {
             WriteLine("(.^.)()()()()()()...");
-        }
-        public int Life()
-        {
-            string[] requestArray = { "Покорми", "Погуляй", "Положи спать", "Поиграй", "Полечи" };
-            Random _rand = new Random();
-            string request = requestArray[_rand.Next(0, 5)];
-            DialogResult result = MessageBox.Show(request, Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-            if (result == DialogResult.Yes) return 1;
-            else return -1;
         }
         public void Kill(Object source, System.Timers.ElapsedEventArgs e)
         {
@@ -53,29 +38,36 @@ namespace C_sharp_DZ_9_1
         public void LifeEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             ShowTama();
-            Life();
         }
-
-
     }
     class Program
     {
         private static System.Timers.Timer aTimer;
         static void Main(string[] args)
         {
-                Title = "Тамагочи";
-                Tama pers = new Tama("Igor", 3);
-                aTimer = new System.Timers.Timer(2000);
-                aTimer.Elapsed += pers.LifeEvent;
+            Title = "Тамагочи";
+            Tama pers = new Tama("Igor");
+            aTimer = new System.Timers.Timer(2000);
+            string[] requestArray = { "Покорми", "Погуляй", "Положи спать", "Поиграй", "Полечи" };
+            Random _rand = new Random();
+            aTimer.Elapsed += pers.LifeEvent;
+            do
+            {
+                string request = requestArray[_rand.Next(0, 5)];
+                DialogResult result = MessageBox.Show(request, pers.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (result == DialogResult.Yes)
+                {
+                    if (Tama.LifeCount < 3) Tama.LifeCount += 1;
+                    else Tama.LifeCount = 3;
+                }
+                else Tama.LifeCount -= 1;
+                WriteLine($"Осталоси жизней: {Tama.LifeCount}");
                 aTimer.AutoReset = true;
                 aTimer.Enabled = true;
-                
-
-                //do
-                //{
-                //} while (LifeCount >= 0);
-
-                ReadKey();
+            } while (Tama.LifeCount > 0);
+            aTimer.Stop();
+            WriteLine("Конец игры.\nPress any key...");
+            ReadKey();
         }
         
     }
